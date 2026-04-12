@@ -1,0 +1,50 @@
+# go to the charts.yaml path 
+# below renders the helm
+helm install python-app . --dry-run --debug
+helm template .
+
+# helm upgrade
+helm upgrade python-app . -n python
+
+# helm list
+helm list -n python
+
+# helm render manifests from release
+helm get manifest python-app -n python
+
+# helm delete
+helm uninstall python-app -n python
+
+# helm repo list
+helm repo list
+
+
+## ARGO CD installation ##
+# argo cd installation using helm
+helm repo add argo https://argoproj.github.io/argo-helm
+
+created argocd chart within the charts folder with values file (values-argo.yaml) 
+as the helm repo is added
+
+# dry run
+helm upgrade --install argocd argo/argo-cd -n argocd --create-namespace -f values-argo.yaml --dry-run --debug
+
+## argo cd installation
+helm upgrade --install argocd argo/argo-cd -n argocd --create-namespace -f values-argo.yaml
+
+argocd config
+
+1. kubectl port-forward service/argocd-server -n argocd 8080:443
+
+    and then open the browser on http://localhost:8080 and accept the certificate
+
+2. enable ingress in the values file `server.ingress.enabled` and either
+      - Add the annotation for ssl passthrough: https://argo-cd.readthedocs.io/en/stable/operator-manual/ingress/#option-1-ssl-passthrough
+      - Set the `configs.params."server.insecure"` in the values file and terminate SSL at your ingress: https://argo-cd.readthedocs.io/en/stable/operator-manual/ingress/#option-2-multiple-ingress-objects-and-hosts
+
+
+After reaching the UI the first time you can login with username: admin and the random password generated during the installation. You can find the password by running:
+
+kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d
+
+(You should delete the initial secret afterwards as suggested by the Getting Started Guide: https://argo-cd.readthedocs.io/en/stable/getting_started/#4-login-using-the-cli)

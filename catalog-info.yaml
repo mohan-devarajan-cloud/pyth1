@@ -1,0 +1,13 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: pyth1
+  description: Python application that displays time.
+  annotations:
+    github.com/project-slug: mohan-devarajan-cloud/pyth1
+    backstage.io/techdocs-ref: dir:.
+
+spec:
+  type: service
+  owner: Development
+  lifecycle: experimental

@@ -1,0 +1,12 @@
+site_name: 'pyth1'
+site_description: 'Main documentation pyth1'
+repo_url: https://github.com/MohanDevarajan/pyth1
+edit_uri: edit/main/docs
+
+plugins:
+  - techdocs-core
+
+# For sidebar navigation on https://backstage.io/, see `microsite/sidebars.js`
+nav:
+  - Overview:
+      - Getting Started: 'docs/index.md'
